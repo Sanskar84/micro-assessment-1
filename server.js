@@ -6,9 +6,44 @@ dotevn.config();
 
 const app = express();
 dotevn.config({path:'./.env'});
+app.use(express.json());
+app.use(express.urlencoded());
+
+require('./config/db.js'); 
+
+const categorySchema = new mongoose.Schema({
+    name:{type:String, required: true},
+
+},
+{
+    timestamps:true
+});
+
+const imageSchema = new mongoose.Schema({
+    name:{
+        type:String,
+        required:true,
+    },
+    category:[{
+        type: String
+    }],
+    likes:{
+        type:Number
+    },
+    imageLink:{
+        type:String,
+        required:true,
+    }
+    },
+    {
+        timestamps:true
+});
 
 
-require('./config/db.js');    
+
+
+
+
 app.get('/api/health',(req,res)=>{
     res.send(`Backend server is active status:active & time:${new Date()})`);
 });
