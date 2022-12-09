@@ -2,42 +2,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotevn = require("dotenv");
 
+const admin = require('./routes/admin');
+
 dotevn.config();
 
 const app = express();
 dotevn.config({path:'./.env'});
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
-require('./config/db.js'); 
 
-const categorySchema = new mongoose.Schema({
-    name:{type:String, required: true},
 
-},
-{
-    timestamps:true
-});
+require('./config/db.js');
 
-const imageSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-    },
-    category:[{
-        type: String
-    }],
-    likes:{
-        type:Number
-    },
-    imageLink:{
-        type:String,
-        required:true,
-    }
-    },
-    {
-        timestamps:true
-});
+app.use("/api/admin",admin);
+ 
 
 
 
@@ -47,11 +26,6 @@ const imageSchema = new mongoose.Schema({
 app.get('/api/health',(req,res)=>{
     res.send(`Backend server is active status:active & time:${new Date()})`);
 });
-
-
-
-
-
 
 
 const port = process.env.PORT || 3000;
