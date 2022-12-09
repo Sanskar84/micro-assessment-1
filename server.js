@@ -1,6 +1,17 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const dotevn = require("dotenv");
+
+dotevn.config();
 
 const app = express();
+dotevn.config({path:'./.env'});
+
+
+require('./config/db.js');    
+app.get('/api/health',(req,res)=>{
+    res.send(`Backend server is active status:active & time:${new Date()})`);
+});
 
 
 
