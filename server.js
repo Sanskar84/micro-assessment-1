@@ -27,6 +27,23 @@ app.get('/api/health',(req,res)=>{
     res.send(`Backend server is active status:active & time:${new Date()})`);
 });
 
+app.use((req,res,next)=>{
+    const err = new Error("Not found");
+    err.status = 404;
+    next(err);
+
+});
+
+app.use((err,req,res,next)=>{
+    res.status(err.status || 500);
+    res.send({
+        error :{
+            status: err.status|| 500, 
+            message: err.message
+        }
+    })
+
+})
 
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || "localhost";
