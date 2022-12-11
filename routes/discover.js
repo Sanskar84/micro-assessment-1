@@ -20,24 +20,16 @@ route.get('/:categoryName',(req,res)=>{
    console.log(req.query);
   
 
-//    if(req.body.sortByDate){
-    
-//     let sort = {createdAt:req.query.sortByDate ==='asc' ?-1:1};
-//    }
-//    if(req.body.sortByLike){
 
-//    let sort = {likes:req.query.sortByLike ==='true' ?1:-1};
-    
-//    }
 const sort = {};
 
 if(req.query.sortByDate){
-    sort.createdAt = req.query.sortByDate === 'asc'?-1:1
+    sort['createdAt'] = req.query.sortByDate === 'asc'?-1:1
 }
 if(req.query.sortByLike){
-    sort.sortByLike = req.query.sortByLike ==='true'?1:-1
+    sort["likes"] = req.query.sortByLike ==='true'?1:-1
 }
-   
+   console.log(sort);
     const getimg = imageCategory.find({category:requestedCategory},function(err,getimg){
         res.send(getimg);
     }).sort(sort).limit(4);
