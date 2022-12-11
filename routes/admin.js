@@ -16,6 +16,7 @@ route.post("/addCategory",(req,res)=>{
         name: req.body.name
    })
    newCategory.save();
+   res.send("Category added succesfully");
 });
 
 route.post('/addImage',(req,res)=>{
@@ -23,6 +24,8 @@ route.post('/addImage',(req,res)=>{
 
     const newImage = new imageCategory({name, category, likes, imageLink});
     newImage.save();
+    res.send("Image added succesfully");
+
 });
 
 
